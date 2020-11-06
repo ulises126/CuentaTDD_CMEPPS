@@ -19,6 +19,7 @@ public class CuentaTest {
     
     @Before
     public void setUp() {
+        cuenta = new Cuenta("123","pepe");
     }
     
     @After
@@ -33,32 +34,31 @@ public class CuentaTest {
         try{   
             cuenta.ingresar(cantidad);     
         } catch (Exception e){
-            System.out.println(e.getMessage());
+            System.out.println("" + e);
             fail("Excepcion no esperada");
         }
         
         double saldo = cuenta.getSaldo();
-        assertEquals(saldo, 100.0); 
+        assert(200.0 == saldo); 
     }
     
     public void testIngresar_negativo() {
         System.out.println("TestIngresar_negativo:");
-        double cantidad = 100.0;
+        double cantidad = -100.0;
         
         try{   
             cuenta.ingresar(cantidad); 
             fail("No ha saltado la excepcion esperada");
         } catch (Exception e){
-            assertEquals(e.getMessage(), "No se pueden ingresar cantidades "
-                    + "negativas");
+            System.out.println("TestIngresar_negativo:");
+            String message = "No se pueden ingresar cantidades negativas";
+            assertEquals(message, "" + e);
         } 
     }
     
     @Test
     public void testRetirar_basico() {
         System.out.println("TestRetirar_basico:");
-        cuenta = new Cuenta("1234.1234.12.123456789", "Matt Damon");
-        cuenta.ingresar(900.0);
         double cantidad = 100.0;
         
         try{   
@@ -69,7 +69,7 @@ public class CuentaTest {
         }
         
         double saldo = cuenta.getSaldo();
-        assertEquals(800.0, saldo);  
+        assert(200.0 == saldo);  
     }
     
     @Test
@@ -81,23 +81,33 @@ public class CuentaTest {
             cuenta.retirar(cantidad); 
             fail("No ha saltado la excepcion esperada");
         } catch (Exception e){
-            assertEquals(e.getMessage(), "No se pueden retirar cantidades "
-                    + "negativas");
+            String message = "java.lang.Exception: No se puede retirar una "
+                    + "cantidad negativa";
+            assertEquals(message, "" + e);
         } 
     }
     
     @Test
     public void testRetirar_saldoInsuficiente() {
         System.out.println("TestRetirar_saldoInsuficiente:");
-        cuenta = new Cuenta("1234.1234.12.123456789", "Matt Damon");
-        cuenta.ingresar(100.0);
         double cantidad = 300.0;
         
         try{   
             cuenta.retirar(cantidad); 
             fail("No ha saltado la excepcion esperada");
         } catch (Exception e){
-            assertEquals(e.getMessage(), "Saldo insuficiente");
+            String message = "java.lang.Exception: Saldo insuficiente";
+            assertEquals(message, "" + e);
         } 
     }
+    
+    @Test
+    public void testGetSaldo() throws Exception {
+        System.out.println("TestGetSaldo:");
+        double cantidad = 200.0;
+        cuenta.ingresar(cantidad);
+        double saldo = cuenta.getSaldo();
+        assert(saldo == cantidad);
+    }
+    
 }
