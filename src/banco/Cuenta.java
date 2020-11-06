@@ -41,7 +41,13 @@ public class Cuenta {
         this.mMovimientos.add(m);
     }
     
-    public double getSaldo(){
-        return 200.0;
+    public double getSaldo()
+    {
+        double saldo = 0.0;
+        for(int i=0; i < mMovimientos.size(); i++)
+        {
+            saldo += mMovimientos.get(i).getImporte();
+        }
+        return saldo;
     }
 }

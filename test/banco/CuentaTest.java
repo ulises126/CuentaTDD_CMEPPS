@@ -29,8 +29,7 @@ public class CuentaTest {
     @Test
     public void testIngresar_basico() {
         System.out.println("TestIngresar:");
-        double cantidad = 100.0;
-        
+        double cantidad = 130.0;
         try{   
             cuenta.ingresar(cantidad);     
         } catch (Exception e){
@@ -39,7 +38,7 @@ public class CuentaTest {
         }
         
         double saldo = cuenta.getSaldo();
-        assert(200.0 == saldo); 
+        assert(130.0 == saldo); 
     }
     
     public void testIngresar_negativo() {
@@ -57,8 +56,9 @@ public class CuentaTest {
     }
     
     @Test
-    public void testRetirar_basico() {
+    public void testRetirar_basico() throws Exception {
         System.out.println("TestRetirar_basico:");
+        cuenta.ingresar(300.0);
         double cantidad = 100.0;
         
         try{   
@@ -104,7 +104,7 @@ public class CuentaTest {
     @Test
     public void testGetSaldo() throws Exception {
         System.out.println("TestGetSaldo:");
-        double cantidad = 200.0;
+        double cantidad = 159.9;
         cuenta.ingresar(cantidad);
         double saldo = cuenta.getSaldo();
         assert(saldo == cantidad);
